@@ -47,3 +47,21 @@ SET species = 'unspecified';
 SELECT species FROM animals;
 ROLLBACK TRANSACTION;
 SELECT species FROM animals;
+
+BEGIN TRANSACTION;
+UPDATE animals
+SET species = 'digimon'
+WHERE name LIKE '%mon';
+SELECT species FROM animals
+WHERE name LIKE '%mon';
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+UPDATE animals
+SET species = 'pokemon'
+WHERE NOT name LIKE '%mon';
+SELECT species FROM animals
+WHERE NOT name LIKE '%mon';
+COMMIT TRANSACTION;
+
+SELECT * FROM animals
