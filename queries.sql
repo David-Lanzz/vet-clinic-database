@@ -41,3 +41,9 @@ SELECT name FROM animals WHERE escape_attempts = (SELECT MAX(escape_attempts) FR
 SELECT MIN(weight_kg),MAX(weight_kg) FROM animals GROUP BY species
 SELECT AVG(escape_attempts) FROM animals
 WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-01-01'
+BEGIN TRANSACTION;
+UPDATE animals
+SET species = 'unspecified';
+SELECT species FROM animals;
+ROLLBACK TRANSACTION;
+SELECT species FROM animals;
