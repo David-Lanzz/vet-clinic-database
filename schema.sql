@@ -9,3 +9,5 @@ id INT NOT NULL,
 	weight_kg DECIMAL
 );
 
+ALTER TABLE animals
+ADD species text;
