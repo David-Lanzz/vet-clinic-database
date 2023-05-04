@@ -63,5 +63,40 @@ WHERE NOT name LIKE '%mon';
 SELECT species FROM animals
 WHERE NOT name LIKE '%mon';
 COMMIT TRANSACTION;
+SELECT * FROM animals
+
+SELECT name FROM animals
+JOIN owners
+ON owners.id = animals.owner_id
+WHERE owners.full_name = 'Melody Pond'
 
 SELECT * FROM animals
+JOIN species
+ON animals.species_id = species.id
+WHERE animals.species_id = 1
+
+SELECT name FROM animals
+JOIN owners
+ON owners.id = animals.owner_id
+WHERE owners.full_name = 'Jennifer Orwell'
+
+SELECT name FROM animals
+JOIN owners
+ON owners.id = animals.owner_id
+WHERE owners.full_name = 'Dean Winchester' AND animals.escape_attempts = 0
+
+SELECT full_name,name FROM owners
+FULL JOIN animals
+ON animals.owner_id = owners.id 
+
+SELECT species.name,COUNT(species_id) FROM animals
+JOIN species
+ON animals.species_id = species.id
+GROUP BY species.name
+
+SELECT owners.full_name,COUNT(name) FROM animals
+JOIN owners
+ON animals.owner_id = owners.id
+GROUP BY owners.full_name
+ORDER BY COUNT(name) DESC
+LIMIT 1
