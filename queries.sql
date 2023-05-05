@@ -100,3 +100,53 @@ ON animals.owner_id = owners.id
 GROUP BY owners.full_name
 ORDER BY COUNT(name) DESC
 LIMIT 1
+
+ALTER TABLE visits
+ADD COLUMN date_of_visit date
+
+SELECT name,animal_id,vet_id,date_of_visit FROM visits JOIN animals
+ON animal_id = id
+WHERE vet_id = 1 AND date_of_visit = (SELECT MIN(date_of_visit) FROM visits WHERE vet_id = 1);
+
+SELECT name,animal_id,vet_id FROM visits JOIN animals
+ON animal_id = id
+WHERE vet_id = 3 
+
+SELECT vets.name,species.name FROM species
+ FULL JOIN specializations
+  ON species.id = specializations.species_id
+ FULL JOIN vets
+  ON specializations.species_id = vets.id;
+
+  SELECT vets.name,animals.name,date_of_visit FROM vets JOIN visits
+ON vets.id = visits.vet_id
+JOIN animals
+ON visits.animal_id = animals.id
+WHERE vets.id = 3 AND date_of_visit BETWEEN '2020-04-01' AND '2020-09-30'
+
+SELECT date_of_visit,name FROM visits JOIN animals
+ON animal_id = id
+WHERE vet_id = 2 AND date_of_visit = (SELECT MIN(date_of_visit) FROM visits WHERE vet_id = 2)
+
+SELECT * FROM visits JOIN animals
+ON animal_id = id
+WHERE date_of_visit = (SELECT MAX(date_of_visit) FROM visits)
+
+SELECT COUNT(date_of_visit) FROM visits FULL JOIN specializations
+ON visits.vet_id = specializations.vet_id
+WHERE specializations.vet_id IS NULL
+
+SELECT COUNT(species_id),species.name FROM visits JOIN animals
+ON animal_id = id
+JOIN species
+ON species_id = species.id
+WHERE vet_id = 2
+GROUP BY species.id
+ORDER BY species.id DESC
+LIMIT 1
+
+SELECT COUNT(animal_id),animals.name FROM visits JOIN animals
+on id = animal_id
+JOIN vets ON visits.vet_id = vets.id
+GROUP BY animals.name
+ORDER BY COUNT DESC LIMIT 1
