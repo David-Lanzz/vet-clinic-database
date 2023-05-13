@@ -71,3 +71,29 @@ SET owner_id = 5
 WHERE name = 'Angemon' OR name = 'Boarmon';
 COMMIT TRANSACTION;
 SELECT * FROM animals
+
+INSERT INTO vets (
+name,age,date_of_graduation
+)
+VALUES ('William Tatcher',45,'2000-04-23'),
+('Maisy Smith',26,'2019-01-07'),
+('Stephanie Mendez',64,'1981-05-04'),
+('Jack Harkness',38,'2008-06-08')
+
+INSERT INTO specializations
+VALUES (1,1),(1,3),(2,3),(2,4);
+SELECT * FROM specializations
+
+BEGIN TRANSACTION;
+INSERT INTO visits
+VALUES (5,1,'2020-05-24'),(5,3,'2020-07-22'),(4,4,'2021-02-02'),(10,2,'2020-01-05'),(10,2,'2020-03-08'),
+(10,2,'2020-05-14'),(1,3,'2021-05-04'),(7,4,'2021-02-24'),(2,2,'2019-12-21'),(2,1,'2020-08-10'),
+(2,2,'2021-04-07'),(8,3,'2019-09-29'),(3,4,'2020-10-03'),(3,4,'2020-11-04'),(6,2,'2019-01-24'),
+(6,2,'2019-05-15'),(6,2,'2020-02-27'),(6,2,'2020-08-03'),
+(6,3,'2020-05-24'),(6,1,'2021-01-11');
+COMMIT TRANSACTION
+
+-- corrected mistake made in data insertion
+UPDATE visits
+SET animal_id = 11 WHERE vet_id = 3 AND date_of_visit = '2020-05-24' OR date_of_visit = '2021-01-11'
+

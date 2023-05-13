@@ -49,3 +49,44 @@ ADD CONSTRAINT owner_id
 FOREIGN KEY(owner_id)
 REFERENCES owners(id);
 COMMIT TRANSACTION
+
+CREATE TABLE vets (
+id INT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
+	name VARCHAR(75) NOT NULL,
+	age INT NOT NULL,
+	date_of_graduation date NOT NULL
+);
+
+BEGIN TRANSACTION;
+CREATE TABLE specializations (
+species_id INT,
+	vet_id INT
+);
+
+ALTER TABLE specializations
+ADD CONSTRAINT fk_species
+FOREIGN KEY (species_id) REFERENCES species(id);
+
+CREATE TABLE visits (
+	animal_id INT,
+vet_id INT,
+	date_of_visit date,
+	PRIMARY KEY (vet_id,animal_id,date_of_visit)
+	);
+	ALTER TABLE visits
+	ADD CONSTRAINT fk_animals
+	FOREIGN KEY (animal_id) REFERENCES animals(id);
+	ALTER TABLE visits
+	ADD CONSTRAINT fk_vets
+	FOREIGN KEY (vet_id) REFERENCES vets(id);
+COMMIT TRANSACTION;
+
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+insert into owners (full_name, email) select 'Owner ' || generate_series(1,2500000), 'owner_' || generate_series(1,2500000) || '@mail.com';
+
+CREATE INDEX vetss_index ON visits(vet_id)
+
+CREATE INDEX animal_index ON visits(animal_id);
+
+CREATE INDEX email_index ON owners(email)
